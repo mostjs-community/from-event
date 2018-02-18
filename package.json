@@ -1,0 +1,62 @@
+{
+  "name": "most-from-event",
+  "description": "Node events for most.js",
+  "version": "1.0.0",
+  "author": "Sergey Samokhov <hi@hoichi.io> (github.com/hoichi)",
+  "bugs": {
+    "url": "https://github.com/mostjs-community/from-event/issues"
+  },
+  "devDependencies": {
+    "@most/eslint-config-most": "^1.0.3",
+    "assert": "^1.4.1",
+    "babel-eslint": "^7.2.3",
+    "buba": "^4.0.2",
+    "eslint": "^3.13.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "jsinspect": "^0.9.0",
+    "mocha": "^3.4.2",
+    "most": "^1.5.1",
+    "nyc": "^11.1.0",
+    "rollup": "^0.56.1",
+    "rollup-plugin-buble": "^0.15.0",
+    "uglify-js": "^3.0.14"
+  },
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://github.com/mostjs-community/from-event#readme",
+  "keywords": [
+    "most",
+    "mostjs",
+    "reactive",
+    "event",
+    "async",
+    "stream"
+  ],
+  "license": "MIT",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "jsnext:main": "dist/index.es.js",
+  "peerDependencies": {
+    "most": "^1.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mostjs-community/from-event.git"
+  },
+  "scripts": {
+    "build": "npm run build:dist && uglifyjs dist/index.js -o dist/index.min.js",
+    "build:dist": "mkdir -p dist && rollup -c --name 'from-event'",
+    "test:lint": "jsinspect src && jsinspect test && eslint src test",
+    "prepublish": "npm run build",
+    "preversion": "npm run build",
+    "test": "npm run test:lint && npm run test:unit",
+    "test:unit": "nyc mocha -r buba/register"
+  },
+  "dependencies": {
+    "@most/scheduler": "^1.1.0",
+    "@most/types": "^1.0.0"
+  }
+}
