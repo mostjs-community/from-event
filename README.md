@@ -1,11 +1,18 @@
-# Node-compatible events for [mostjs](https://github.com/mostjs/)
+# most from-event
+Node-compatible events for [mostjs v2](https://github.com/mostjs/). For instance,
 
-A starting point for new `@most` packages.
+```js
+import { fromEvent } from 'most-from-event';
+
+const watcher = fs.watch('./tmp');
+
+const stream = fromEvent(watcher, 'change');
+```
 
 ### Install
 
 ```sh
-npm install --save @hoichi/from-event
+npm install --save most-from-event
 ```
 
 ## API
