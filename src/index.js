@@ -10,39 +10,24 @@ const fromEvent = (event, emitter) =>
 const fromEventPrepended = (event, emitter) =>
   new FromEvent(event, emitter, 'prependListener')
 
-const fromEventOnce = (event, emitter) =>
-  new FromEvent(event, emitter, 'once', true)
-
-const fromEventPrependedOnce = (event, emitter) =>
-  new FromEvent(event, emitter, 'prependOnceListener', true)
-
 class FromEvent {
-  constructor (event, emitter, method, once = false) {
+  constructor (event, emitter, method) {
     this.event = event
     this.emitter = emitter
     this.method = method
-    this.once = once
   }
 
   run (sink, scheduler) {
-    const send = this.once ? sendOnce : sendEver
-
     this.emitter[this.method](this.event, send)
 
     return { dispose }
 
-    function sendEver (evt) {
+    function send (evt) {
       tryEvent(currentTime(scheduler), evt, sink)
     }
 
-    function sendOnce (evt) {
-      sendEver(evt)
-      sink.end(currentTime(scheduler))
-    }
-
     function dispose () {
-      // still need it for `.once()` in case that first event wasn’t emitted yet
-      this.emitter.removeListener(this.event, sendEver)
+      this.emitter.removeListener(this.event, send)
     }
   }
 }
@@ -57,7 +42,5 @@ function tryEvent (time, event, sink) {
 
 export {
   fromEvent,
-  fromEventPrepended,
-  fromEventOnce,
-  fromEventPrependedOnce
+  fromEventPrepended
 }
