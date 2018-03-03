@@ -5,20 +5,16 @@ import { currentTime } from '@most/scheduler'
 
 // fromEvent :: (Emitter emt, Event e) => String -> emt -> Stream e
 const fromEvent = (event, emitter) =>
-  new FromEvent(event, emitter, 'addListener')
+  FromEvent(event, emitter, 'addListener')
 
 const fromEventPrepended = (event, emitter) =>
-  new FromEvent(event, emitter, 'prependListener')
+  FromEvent(event, emitter, 'prependListener')
 
-class FromEvent {
-  constructor (event, emitter, method) {
-    this.event = event
-    this.emitter = emitter
-    this.method = method
-  }
+function FromEvent (event, emitter, method) {
+  return { run }
 
-  run (sink, scheduler) {
-    this.emitter[this.method](this.event, send)
+  function run (sink, scheduler) {
+    emitter[method](event, send)
 
     return { dispose }
 
@@ -27,7 +23,7 @@ class FromEvent {
     }
 
     function dispose () {
-      this.emitter.removeListener(this.event, send)
+      emitter.removeListener(event, send)
     }
   }
 }
