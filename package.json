@@ -1,7 +1,7 @@
 {
   "name": "most-from-event",
   "description": "Node events for most.js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Sergey Samokhov <hi@hoichi.io> (github.com/hoichi)",
   "bugs": {
     "url": "https://github.com/mostjs-community/from-event/issues"
