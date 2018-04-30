@@ -12,6 +12,10 @@
   "bugs": {
     "url": "https://github.com/mostjs-community/from-event/issues"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mostjs-community/from-event.git"
+  },
   "keywords": [
     "most",
     "mostjs",
@@ -20,6 +24,21 @@
     "async",
     "stream"
   ],
+  "scripts": {
+    "build": "npm run build:commonjs && npm run build:es2015 && npm run build:umd",
+    "build:commonjs": "./node_modules/.bin/tsc -P cfg/tsconfig.commonjs.json",
+    "build:es2015": "./node_modules/.bin/tsc -P cfg/tsconfig.es2015.json",
+    "build:umd": "mkdir -p dist && rollup -c --name 'from-event' && uglifyjs dist/most-from-event.js -o dist/most-from-event.min.js",
+    "prepublish": "npm run build",
+    "preversion": "npm run build",
+    "test": "npm run test:lint && npm run test:unit",
+    "test:lint": "./node_modules/.bin/tslint -p tsconfig.json -c tslint.json 'src/*.ts'",
+    "test:unit": "./node_modules/.bin/mocha -r ts-node/register src/*.test.ts"
+  },
+  "dependencies": {
+    "@most/scheduler": "^1.1.0",
+    "@most/types": "^1.0.0"
+  },
   "devDependencies": {
     "@most/types": "^1.0.0",
     "@types/mocha": "^5.2.0",
@@ -28,6 +47,7 @@
     "mocha": "^3.4.2",
     "most": "^1.5.1",
     "rollup": "^0.58.2",
+    "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-typescript2": "^0.13.0",
     "ts-node": "^6.0.0",
     "tslint": "^5.9.1",
@@ -40,24 +60,5 @@
   ],
   "peerDependencies": {
     "most": "^1.0.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/mostjs-community/from-event.git"
-  },
-  "scripts": {
-    "build": "npm run build:commonjs && npm run build:es2015 && npm run build:umd",
-    "build:commonjs": "./node_modules/.bin/tsc -P cfg/tsconfig.commonjs.json",
-    "build:es2015": "./node_modules/.bin/tsc -P cfg/tsconfig.es2015.json",
-    "build:umd": "mkdir -p dist && rollup -c --name 'from-event' && uglifyjs dist/index.js -o dist/index.min.js",
-    "prepublish": "npm run build",
-    "preversion": "npm run build",
-    "test": "npm run test:lint && npm run test:unit",
-    "test:lint": "./node_modules/.bin/tslint -p tsconfig.json -c tslint.json 'src/*.ts'",
-    "test:unit": "./node_modules/.bin/mocha -r ts-node/register src/*.test.ts"
-  },
-  "dependencies": {
-    "@most/scheduler": "^1.1.0",
-    "@most/types": "^1.0.0"
   }
 }

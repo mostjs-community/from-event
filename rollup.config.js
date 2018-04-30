@@ -1,4 +1,5 @@
 import typescript from 'rollup-plugin-typescript2'
+import resolve from 'rollup-plugin-node-resolve'
 
 export default {
   input: 'src/index.ts',
@@ -6,7 +7,10 @@ export default {
     file: 'dist/most-from-event.js',
     name: 'mostFromEvent',
     sourceMap: true,
-    format: 'umd'
+    format: 'umd',
   },
-  plugins: [ typescript() ]
+  plugins: [
+    typescript(),
+    resolve(),
+  ]
 }
