@@ -1,6 +1,12 @@
 node_modules/
 .idea/
 coverage/
+
+#caches and logs
 .nyc_output/
-dist/
+.rpt2_cache
 npm-debug.log
+
+#builds
+lib/
+lib.es2015/

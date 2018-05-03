@@ -1,26 +1,16 @@
-import buble from 'rollup-plugin-buble'
-import pkg from './package.json'
+import typescript from 'rollup-plugin-typescript2'
+import resolve from 'rollup-plugin-node-resolve'
 
 export default {
-  input: 'src/index.js',
+  input: 'src/index.ts',
+  output: {
+    file: 'dist/most-from-event.js',
+    name: 'mostFromEvent',
+    sourceMap: true,
+    format: 'umd',
+  },
   plugins: [
-    buble()
-  ],
-  external: ['@most/scheduler'],
-  output: [
-    {
-      file: pkg.main,
-      format: 'umd',
-      name: 'most.fromEvent',
-      sourcemap: true,
-      globals: {
-        '@most/scheduler': 'mostScheduler'
-      }
-    },
-    {
-      file: pkg.module,
-      format: 'es',
-      sourcemap: true
-    }
+    typescript(),
+    resolve(),
   ]
 }
