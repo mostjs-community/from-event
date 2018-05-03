@@ -36,8 +36,7 @@
     "test:unit": "./node_modules/.bin/mocha -r ts-node/register src/*.test.ts"
   },
   "dependencies": {
-    "@most/scheduler": "^1.1.0",
-    "@most/types": "^1.0.0"
+    "@most/scheduler": "^1.1.0"
   },
   "devDependencies": {
     "@most/types": "^1.0.0",
@@ -45,7 +44,6 @@
     "@types/node": "^9.6.6",
     "assert": "^1.4.1",
     "mocha": "^3.4.2",
-    "most": "^1.5.1",
     "rollup": "^0.58.2",
     "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-typescript2": "^0.13.0",
@@ -59,6 +57,6 @@
     "dist"
   ],
   "peerDependencies": {
-    "most": "^1.0.0"
+    "@most/core": "^1.2.3"
   }
 }
