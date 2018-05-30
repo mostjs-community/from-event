@@ -5,7 +5,7 @@ import {map, merge, runEffects, zipItems,} from '@most/core'
 import { newDefaultScheduler } from '@most/scheduler'
 
 import { EventEmitter } from 'events'
-import { fromEvent, fromEventPrepended } from './index'
+import { fromEvent, fromEventPrepended, ListenerDisposable } from './index'
 
 
 describe('@most/from-event', () => {
@@ -40,7 +40,14 @@ describe('@most/from-event', () => {
     input.forEach(v => emitter.emit(event, v))
   })
 
-  xit('dispose should remove listeners', () => {
-    // todo
+  it('dispose should remove listeners', () => {
+    const callback = () => void 0;
+    const disposable = ListenerDisposable(emitter, event, callback)
+
+    emitter.addListener(event, callback)
+    assert(emitter.listenerCount(event) === 1)
+
+    disposable.dispose()
+    assert(emitter.listenerCount(event) === 0)
   })
 })
