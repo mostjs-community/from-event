@@ -23,14 +23,18 @@
       return { run: run };
       function run(sink, scheduler) {
           emitter[method](event, send);
-          return { dispose: dispose };
+          return ListenerDisposable(emitter, event, send);
           function send(e) {
               tryEvent(currentTime(scheduler), e, sink);
           }
-          function dispose() {
+      }
+  }
+  function ListenerDisposable(emitter, event, send) {
+      return {
+          dispose: function () {
               emitter.removeListener(event, send);
           }
-      }
+      };
   }
   function tryEvent(t, e, sink) {
       try {
@@ -43,6 +47,7 @@
 
   exports.fromEvent = fromEvent;
   exports.fromEventPrepended = fromEventPrepended;
+  exports.ListenerDisposable = ListenerDisposable;
 
   Object.defineProperty(exports, '__esModule', { value: true });
 

@@ -17,7 +17,7 @@ const fromEventPrepended = (event: string, emitter: EventEmitter) =>
 function FromEvent<T> (
   event: string,
   emitter: EventEmitter,
-  method: SubscriptionMethod
+  method: SubscriptionMethod,
 ): Stream<T> {
 
   return { run }
@@ -25,13 +25,21 @@ function FromEvent<T> (
   function run (sink: Sink<T>, scheduler: Scheduler): Disposable {
     emitter[method](event, send)
 
-    return { dispose }
+    return ListenerDisposable(emitter, event, send)
 
     function send (e: T) {
       tryEvent(currentTime(scheduler), e, sink)
     }
+  }
+}
 
-    function dispose () {
+function ListenerDisposable<T>(
+  emitter: EventEmitter,
+  event: string,
+  send: (e: T) => void,
+): Disposable {
+  return {
+    dispose: () => {
       emitter.removeListener(event, send)
     }
   }
@@ -47,5 +55,6 @@ function tryEvent<T> (t: Time, e: T, sink: Sink<T>) {
 
 export {
   fromEvent,
-  fromEventPrepended
+  fromEventPrepended,
+  ListenerDisposable,
 }
